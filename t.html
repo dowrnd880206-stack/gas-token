@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>개안심 토큰</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Noto Sans KR", sans-serif;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh; margin: 0; background: #f8fafc;
+    padding: 16px;
+  }
+  .card {
+    text-align: center; padding: 32px 24px;
+    max-width: 400px; width: 100%;
+    background: #fff; border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .card h2 { margin: 0 0 8px; font-size: 20px; }
+  .desc { color: #64748b; font-size: 13px; margin-bottom: 16px; }
+  .token {
+    font-family: "Courier New", monospace;
+    font-size: 10px; word-break: break-all;
+    background: #f1f5f9; color: #334155;
+    padding: 14px; border-radius: 8px;
+    margin: 0 0 20px; text-align: left;
+    max-height: 120px; overflow-y: auto;
+    user-select: all; -webkit-user-select: all;
+  }
+  .btn {
+    display: block; width: 100%; padding: 16px;
+    font-size: 17px; font-weight: 700;
+    border: none; border-radius: 12px;
+    color: #fff; background: #3b82f6; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn:active { background: #1d4ed8; }
+  .ok {
+    color: #16a34a; font-weight: 600;
+    margin-top: 14px; display: none; font-size: 15px;
+  }
+  .err {
+    color: #dc2626; font-weight: 600;
+    margin-top: 14px; display: none; font-size: 14px;
+  }
+  .empty-state {
+    color: #94a3b8; font-size: 15px;
+    padding: 40px 0;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <h2> 점검 결과 토큰</h2>
+  <div class="desc">아래 토큰을 복사하여 리더에게 전달해주세요.</div>
+  <div id="content"></div>
+</div>
+<script>
+(function() {
+  var raw = location.hash.slice(1);
+  var token = '';
+  try { token = decodeURIComponent(raw); } catch(e) { token = raw; }
+  var el = document.getElementById('content');
+
+  if (!token) {
+    el.innerHTML = '<div class="empty-state">토큰 정보가 없습니다.</div>';
+    return;
+  }
+
+  el.innerHTML =
+    '<div class="token" id="tv"></div>' +
+    '<button class="btn" id="copyBtn">복사하기</button>' +
+    '<div class="ok" id="ok">✅ 복사됨! 메신저에 붙여넣기 하세요.</div>' +
+    '<div class="err" id="err">복사에 실패했습니다. 위 토큰을 길게 눌러 직접 선택해주세요.</div>';
+
+  document.getElementById('tv').textContent = token;
+
+  document.getElementById('copyBtn').addEventListener('click', function() {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(token).then(function() {
+        document.getElementById('ok').style.display = 'block';
+        document.getElementById('err').style.display = 'none';
+      }, fallback);
+    } else {
+      fallback();
+    }
+  });
+
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = token;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      var ok = document.execCommand('copy');
+      document.getElementById(ok ? 'ok' : 'err').style.display = 'block';
+      document.getElementById(ok ? 'err' : 'ok').style.display = 'none';
+    } catch(e) {
+      document.getElementById('err').style.display = 'block';
+    }
+    document.body.removeChild(ta);
+  }
+})();
+</script>
+</body>
+</html>
