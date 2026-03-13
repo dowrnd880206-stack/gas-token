@@ -3,65 +3,139 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>개안심 토큰</title>
+<title>개안심 점검 결과 토큰</title>
 <style>
   * { box-sizing: border-box; }
+
   body {
     font-family: -apple-system, "Noto Sans KR", sans-serif;
-    display: flex; justify-content: center; align-items: center;
-    min-height: 100vh; margin: 0; background: #f8fafc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: #f8fafc;
     padding: 16px;
   }
+
   .card {
-    text-align: center; padding: 32px 24px;
-    max-width: 400px; width: 100%;
-    background: #fff; border-radius: 16px;
+    text-align: center;
+    padding: 28px 24px 32px;
+    max-width: 420px;
+    width: 100%;
+    background: #fff;
+    border-radius: 16px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   }
-  .card h2 { margin: 0 0 8px; font-size: 20px; }
-  .desc { color: #64748b; font-size: 13px; margin-bottom: 16px; }
+
+  .logo-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  .logo {
+    max-width: 240px;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .card h2 {
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .desc {
+    color: #64748b;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
   .token {
     font-family: "Courier New", monospace;
-    font-size: 10px; word-break: break-all;
-    background: #f1f5f9; color: #334155;
-    padding: 14px; border-radius: 8px;
-    margin: 0 0 20px; text-align: left;
-    max-height: 120px; overflow-y: auto;
-    user-select: all; -webkit-user-select: all;
+    font-size: 10px;
+    word-break: break-all;
+    background: #f1f5f9;
+    color: #334155;
+    padding: 14px;
+    border-radius: 8px;
+    margin: 0 0 20px;
+    text-align: left;
+    max-height: 120px;
+    overflow-y: auto;
+    user-select: all;
+    -webkit-user-select: all;
   }
+
   .btn {
-    display: block; width: 100%; padding: 16px;
-    font-size: 17px; font-weight: 700;
-    border: none; border-radius: 12px;
-    color: #fff; background: #3b82f6; cursor: pointer;
+    display: block;
+    width: 100%;
+    padding: 16px;
+    font-size: 17px;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    background: #3b82f6;
+    cursor: pointer;
     transition: background 0.15s;
   }
-  .btn:active { background: #1d4ed8; }
+
+  .btn:active {
+    background: #1d4ed8;
+  }
+
   .ok {
-    color: #16a34a; font-weight: 600;
-    margin-top: 14px; display: none; font-size: 15px;
+    color: #16a34a;
+    font-weight: 600;
+    margin-top: 14px;
+    display: none;
+    font-size: 15px;
   }
+
   .err {
-    color: #dc2626; font-weight: 600;
-    margin-top: 14px; display: none; font-size: 14px;
+    color: #dc2626;
+    font-weight: 600;
+    margin-top: 14px;
+    display: none;
+    font-size: 14px;
   }
+
   .empty-state {
-    color: #94a3b8; font-size: 15px;
+    color: #94a3b8;
+    font-size: 15px;
     padding: 40px 0;
   }
 </style>
 </head>
 <body>
 <div class="card">
-  <h2> 점검 결과 토큰</h2>
+  <div class="logo-wrap">
+    <img
+      class="logo"
+      alt="홈앤서비스 SK브로드밴드 로고"
+      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAABLCAYAAABdzm2UAAAACXBIWXMAAAsSAAALEgHS3X78AAAgAElEQVR4nO2deXBU1f3HP7fJJrOwk5CEsHEHgQhCIImh6KCCCoJQkSoVoYofqatWcQ/UrVqtfhUbtVa0W8VabS1V1wotYFXBFCxIqSHEkKAEE4QQQpqQhASTzT333j8mzL1kkrNZm8n8nuc8H3jJ3XvvnHPnPPfce+65+9QqlUrh4eHh4eHh4eHh4eHh4THxkM7ZB3h4eHh4eHh4eHh4eHh4fF+gkR3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj8fQ3Q8PDw8PDw8PDw8PDw8Pj+f/AcFnDR81tOJPAAAAAElFTkSuQmCC">
+  </div>
+
+  <h2>개안심 점검 결과 토큰</h2>
   <div class="desc">🐶 아래 토큰을 복사하여 전달해주세요.</div>
   <div id="content"></div>
 </div>
+
 <script>
 (function() {
   var raw = location.hash.slice(1);
   var token = '';
-  try { token = decodeURIComponent(raw); } catch(e) { token = raw; }
+  try {
+    token = decodeURIComponent(raw);
+  } catch (e) {
+    token = raw;
+  }
+
   var el = document.getElementById('content');
 
   if (!token) {
@@ -72,8 +146,8 @@
   el.innerHTML =
     '<div class="token" id="tv"></div>' +
     '<button class="btn" id="copyBtn">복사하기</button>' +
-    '<div class="ok" id="ok">✅ 복사됨! 메신저에 붙여넣기 하세요.</div>' +
-    '<div class="err" id="err">복사에 실패했습니다. 위 토큰을 길게 눌러 직접 선택해주세요.</div>';
+    '<div class="ok" id="ok">복사됨! 메신저에 붙여넣기 하세요.</div>' +
+    '<div class="err" id="err">복사에 실패했습니다. 위 토큰을 직접 선택해서 복사해주세요.</div>';
 
   document.getElementById('tv').textContent = token;
 
@@ -95,13 +169,16 @@
     ta.style.opacity = '0';
     document.body.appendChild(ta);
     ta.select();
+
     try {
-      var ok = document.execCommand('copy');
-      document.getElementById(ok ? 'ok' : 'err').style.display = 'block';
-      document.getElementById(ok ? 'err' : 'ok').style.display = 'none';
-    } catch(e) {
+      var copied = document.execCommand('copy');
+      document.getElementById(copied ? 'ok' : 'err').style.display = 'block';
+      document.getElementById(copied ? 'err' : 'ok').style.display = 'none';
+    } catch (e) {
       document.getElementById('err').style.display = 'block';
+      document.getElementById('ok').style.display = 'none';
     }
+
     document.body.removeChild(ta);
   }
 })();
